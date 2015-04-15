@@ -1,0 +1,17 @@
+instance_volume: "{{ lookup('env','HOME') }}/odoo70_data_git"
+instance_image_name: clavos70_git
+instance_name: clavos-odoo70-git
+instance_hostname: odoo70
+
+
+odoo_xmlrpc_mapped_port: 10069
+odoo_longpoll_mapped_port: 10072
+odoo_config_file: "/home/production/instance/config/instance.conf"
+
+db_server: "172.17.42.1"
+db_filter: ".*"
+db_name: False
+
+db_user: odoo70
+db_password: clave_postgres
+

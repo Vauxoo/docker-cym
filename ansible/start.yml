@@ -1,0 +1,20 @@
+- hosts: local
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - name: Start a new instance conatiner
+      docker:
+        image: "{{ instance_image_name }}"
+        name: "{{ instance_name }}"
+        command: "/entry_point.py"
+        hostname: "{{ instance_hostname }}"
+        ports:
+          - "{{ odoo_xmlrpc_mapped_port }}:8069"
+          - "{{ odoo_longpoll_mapped_port }}:8072"
+        env: "DB_HOST={{ db_server }},DBFILTER={{ db_filter }},DB_NAME=False,DB_USER={{ db_user }},DB_PASSWORD={{db_password }},WITHOUT_DEMO=False,ODOO_CONFIG_FILE={{ odoo_config_file }}"
+        volumes:
+          - "{{ instance_volume }}/ssh:/home/production/.ssh"
+          - "{{ instance_volume }}/logs:/var/log/supervisor"
+          - "{{ instance_volume }}/filestore:/home/production/.local/share/Odoo"
+          - "{{ instance_volume }}/tmp:/tmp"     
