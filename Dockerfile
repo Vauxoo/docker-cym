@@ -21,11 +21,14 @@ RUN chmod 600 /home/production/.ssh/id_rsa
 RUN ssh-keyscan github.com > /home/production/.ssh/known_hosts \
     && ssh-keyscan launchpad.net >> /home/production/.ssh/known_hosts \
     && ssh-keyscan bitbucket.org >> /home/production/.ssh/known_hosts
-RUN mkdir -p /home/production/instance/config
+RUN mkdir -p /home/production/instance/config && mkdir -p /home/production/instance/extra_addons
 ADD files/instance.conf /home/production/instance/config/instance.conf
 RUN cd /home/production/instance && git clone -b 7.0 --single-branch --depth=1 git@github.com:odoo/odoo.git
 RUN cd /home/production/instance/extra_addons && git clone -b 7.0 --single-branch --depth=1 git@github.com:Vauxoo/addons-vauxoo.git
 RUN cd /home/production/instance/extra_addons && git clone -b 7.0 --single-branch --depth=1 git@github.com:Vauxoo/odoo-mexico-v2.git
+RUN git clone -b 7.0 --single-branch --depth=1 git@bitbucket.org:clavosymaderas/addons-zenpar.git /home/production/instance/extra_addons/addons-zenpar
+RUN git clone -b 7.0 --single-branch --depth=1 git@bitbucket.org:clavosymaderas/openerp-7-web-addons-master.git /home/production/instance/extra_addons/openerp-7-web-addons-master
+RUN git clone -b 7.0 --single-branch --depth=1 git@bitbucket.org:clavosymaderas/hesatec.git /home/production/instance/extra_addons/hesatec
 RUN mkdir /home/production/filestore \
     && ln -s /home/production/filestore /home/production/instance/odoo/openerp/filestore
 RUN rm /home/production/.ssh/id_rsa
