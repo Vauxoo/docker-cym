@@ -4,7 +4,7 @@ ENV TZ Etc/UTC
 RUN pip install python-Levenshtein
 
 # jasper-report dependency
-RUN apt-get install openjdk-6-jdk
+RUN apt-get update && apt-get install openjdk-6-jdk
 
 RUN adduser --home=/home/production --disabled-password --gecos "" --shell=/bin/bash production
 RUN echo 'root:production' |chpasswd
@@ -38,6 +38,7 @@ RUN mkdir /home/production/filestore \
     && ln -s /home/production/filestore /home/production/instance/odoo/openerp/filestore
 RUN rm /home/production/.ssh/id_rsa
 USER root
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 VOLUME ["/home/production/filestore", "/home/production/.ssh", "/var/log/supervisor", "/tmp"]
 EXPOSE 8069
 EXPOSE 8072
