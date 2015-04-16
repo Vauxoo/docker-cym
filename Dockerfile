@@ -2,6 +2,10 @@ FROM vauxoo/odoo-70-image
 RUN echo Etc/Utc > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata
 ENV TZ Etc/UTC
 RUN pip install python-Levenshtein
+
+# jasper-report dependency
+RUN apt-get install openjdk-6-jdk
+
 RUN adduser --home=/home/production --disabled-password --gecos "" --shell=/bin/bash production
 RUN echo 'root:production' |chpasswd
 ADD files/instance /home/production/instance
