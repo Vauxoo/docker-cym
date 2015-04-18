@@ -8,7 +8,6 @@ RUN apt-get update && apt-get install openjdk-6-jdk
 
 RUN adduser --home=/home/production --disabled-password --gecos "" --shell=/bin/bash production
 RUN echo 'root:production' |chpasswd
-ADD files/instance /home/production/instance
 ENV ODOO_USER production
 ENV HOME /home/production
 ENV ODOO_CONFIG_FILE /home/production/instance/config/instance.conf
