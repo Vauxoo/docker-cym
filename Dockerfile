@@ -32,7 +32,9 @@ RUN cd /home/production/instance/extra_addons && git clone -b 7.0 --single-branc
 RUN git clone -b 7.0 --single-branch --depth=1 git@bitbucket.org:clavosymaderas/addons-zenpar.git /home/production/instance/extra_addons/addons_zenpar
 RUN git clone -b 7.0 --single-branch --depth=1 git@bitbucket.org:clavosymaderas/openerp-7-web-addons-master.git /home/production/instance/extra_addons/openerp-7-web-addons-master
 RUN git clone -b 7.0 --single-branch --depth=1 git@bitbucket.org:clavosymaderas/hesatec.git /home/production/instance/extra_addons/hesatec
-RUN bzr checkout http://bazaar.launchpad.net/~jasper-reports-commiters/openobject-jasper-reports/7.0 --lightweight /home/production/instance/extra_addons/jasper-reports
+RUN bzr checkout http://bazaar.launchpad.net/~jasper-reports-commiters/openobject-jasper-reports/7.0 --lightweight /home/production/instance/extra_addons/jasper-reports \
+    && git clone -b 7.0 --single-branch --depth=1 git@bitbucket.org:clavosymaderas/jasper-custom-reports.git /home/production/instance/extra_addons/jasper-custom-reports \
+    && ln -s /home/production/instance/extra_addons/jasper-custom-reports/custom_reports/* /home/production/instance/extra_addons/jasper-reports/jasper_reports/custom_reports
 RUN mkdir /home/production/filestore \
     && ln -s /home/production/filestore /home/production/instance/odoo/openerp/filestore
 RUN rm /home/production/.ssh/id_rsa
